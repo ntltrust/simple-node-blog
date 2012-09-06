@@ -6,12 +6,36 @@
 
 <body>
 
+<h1>New Post</h1>
+<p>There are currently <%= posts.length %> posts in the database. Would you like to create a new one?</p>
+
+<form action="/" method="POST">
+  <p>
+    <label for="author_email">Author E-Mail:</label><br>
+    <input type="text" name="author_email" id="author_email">
+  </p>
+
+  <p>
+    <label for="title">Title:</label><br>
+    <input type="text" name="title" id="title">
+  </p>
+
+  <p>
+    <label for="body">Post Body:</label><br>
+    <textarea rows="6" cols="60" name="body" id="body"></textarea>
+  </p>
+
+  <input type="submit" value="Save Post">
+</form>
+
+
 <h1>Posts</h1>
 <ul id="posts">
   <% posts.forEach(function(p){ %>
     <li><%= p.title %> <%= p.author_email %></li>
   <% }) %>
 </ul>
+
 
 </body>
 </html>
