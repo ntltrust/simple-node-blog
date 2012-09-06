@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/main.css">
+  <title> <%= post.title %> </title>
+</head>
+
+<body>
+  <div id="post-title">
+    <h1><%= post.title %></h1>
+  </div>
+
+  <div id="post-author">
+    By <a href="mailto:<%= post.author_email %>"><%= post.author_email %></a> at <%= post.created_at %>
+  </div>
+
+  <div id="post-body">
+    <%= post.body %>
+  </div>
+
+</body>
+</html>
