@@ -3,12 +3,15 @@ var express = require('express');
 var app = express();
 var uuid = require('node-uuid')
 var util = require('util');
+var moment = require('moment');
 
 // Set some basic view settings for Express.
 // Taken from https://github.com/visionmedia/express/blob/master/examples/ejs/index.js
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 app.use(express.bodyParser());
+app.use(express.logger('dev'));
+app.use(express.static(__dirname + '/public'));
 
 var pg = require('pg').native;
 
@@ -19,6 +22,16 @@ else {
   var conString = "tcp://dev:dev@localhost/nodeblog";
 }
 
+// For reading a blog post
+app.get('/posts/:guid', function(req, res) {
+  pg.connect(conString, function(err, client) {
+    client.query("SELECT * FROM posts WHERE id = '" + req.params.guid + "' LIMIT 1", function(err, result) {
+      console.log(result);
+      res.render('post', { post: result.rows[0] });
+    })
+  });
+});
+
 // For creating a new blog post.
 app.post('/', function(req, res) {
   var author_email = req.body.author_email;
@@ -27,7 +40,8 @@ app.post('/', function(req, res) {
   var guid = uuid.v4();
 
   pg.connect(conString, function(err, client) {
-    var q = util.format("INSERT INTO posts (id, author_email, body, title) VALUES ('%s', '%s', '%s', '%s')", guid, author_email, body, title);
+    var creation_date = moment().utc().format("YYYY-MM-DD HH:mm:ss");
+    var q = util.format("INSERT INTO posts (id, author_email, body, title, created_at) VALUES ('%s', '%s', '%s', '%s', '%s')", guid, author_email, body, title, creation_date);
     console.log(q);
     client.query(q, function(err, result) {
       console.log(result);
@@ -41,8 +55,7 @@ app.post('/', function(req, res) {
 app.get('/', function(req, res) {
 
   pg.connect(conString, function(err, client) {
-    client.query('SELECT * FROM posts', function(err, result) {
-      console.log(result);
+    client.query('SELECT * FROM posts ORDER BY created_at DESC', function(err, result) {
       res.render('posts', { posts: result.rows });
     })
   });
