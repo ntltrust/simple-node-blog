@@ -4,12 +4,13 @@
   "author": "J. Austin Hughey <jaustinhughey@me.com>",
   "description": "A simple, half-done blog in Node using Express",
   "scripts": {
-    "migrate": "node ./migrations/initial_db_setup.js"
+    "migrate": "node ./migrations/add_timestamps_to_posts.js"
   },
   "dependencies": {
     "express": "3.0.x",
     "pg": "0.8.x",
     "ejs": "0.8.x",
-    "node-uuid": "1.3.x"
+    "node-uuid": "1.3.x",
+    "moment": "1.7.x"
   }
 }
