@@ -40,24 +40,6 @@ app.post('/', function(req, res) {
 // Index - shows posts and has a form to create a new one
 app.get('/', function(req, res) {
 
-  // Define the "after" callback for use with the pg module
-  // var after = function(callback) {
-  //   return function(err, queryResult) {
-  //     if(err) {
-  //       res.writeHead(500, {"Content-Type" : "text/plain"});
-  //       return res.end("Error! " + sys.inspect(err))
-  //     }
-  //     callback(queryResult)
-  //   }
-  // }
-
-  // pg.connect(conString, after(function(client) {
-  //   client.query("SELECT * FROM posts", after(function(result) {
-  //     res.render('posts', { posts: result });
-  //   }))
-  // }))
-
-
   pg.connect(conString, function(err, client) {
     client.query('SELECT * FROM posts', function(err, result) {
       console.log(result);
