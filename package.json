@@ -4,7 +4,7 @@
   "author": "J. Austin Hughey <jaustinhughey@me.com>",
   "description": "A simple, half-done blog in Node using Express",
   "scripts": {
-    "migrate": "node ./migrations/add_timestamp_to_posts.js"
+    "migrate": "node ./migrations/add_timestamps_to_posts.js"
   },
   "dependencies": {
     "express": "3.0.x",
