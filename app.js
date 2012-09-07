@@ -44,7 +44,6 @@ app.get('/', function(req, res) {
   // Get all the existing posts out of the database.
   // Note that in a real app, you'd want this paginated, but for demo purposes this works.
   var query = client.query("SELECT * FROM posts ORDER BY created_at DESC");
-  var rows = [];
   query.on('row', function(row, result) {
     result.addRow(row);
   });
