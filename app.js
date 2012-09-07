@@ -62,4 +62,6 @@ app.get('/', function(req, res) {
 
 });
 
-app.listen(3000);
+// What port should we be listening on?
+port = process.env.PORT || 3000;
+app.listen(port);
